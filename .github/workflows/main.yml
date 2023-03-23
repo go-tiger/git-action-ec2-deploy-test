@@ -30,7 +30,7 @@ jobs:
             cd git-action-ec2-deploy-test
             git pull origin main
             npm i
-            node app.js
+            pm2 start app.js
 
       # - name: ls -al
       #   run: ls -al
