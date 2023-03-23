@@ -26,6 +26,9 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
 
+      - name: ls -al
+        run: ls -al
+
       # - name: Pull code from Git repository
       #   run: git pull
 
