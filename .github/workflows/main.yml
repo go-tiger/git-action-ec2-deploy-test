@@ -27,6 +27,10 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             ls -al
+            cd git-action-ec2-deploy-test
+            git pull origin main
+            npm i
+            node app.js
 
       # - name: ls -al
       #   run: ls -al
