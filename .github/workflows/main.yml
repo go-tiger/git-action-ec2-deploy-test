@@ -25,12 +25,14 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
+          script: |
+            ls -al
 
-      - name: ls -al
-        run: ls -al
+      # - name: ls -al
+      #   run: ls -al
 
-      - name: Pull code from Git repository
-        run: git pull origin main
+      # - name: Pull code from Git repository
+      #   run: git pull origin main
 
       # - name: Install dependencies and build
       #   run: |
