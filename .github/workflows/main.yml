@@ -1,0 +1,43 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install Node.js and NPM
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18.x'
+
+      - name: Connect to EC2 instance
+        uses: appleboy/ssh-action@v0.1.6
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+
+      - name: Pull code from Git repository
+        run: git pull
+
+      - name: Install dependencies and build
+        run: |
+          npm install
+          node app.js
+
+      - name: Deploy code to EC2
+        uses: appleboy/scp-action@master
+        with:
+          local: '.'
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          remote_path: '/var/www/app'
