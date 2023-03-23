@@ -29,8 +29,8 @@ jobs:
       - name: ls -al
         run: ls -al
 
-      # - name: Pull code from Git repository
-      #   run: git pull
+      - name: Pull code from Git repository
+        run: git pull origin main
 
       # - name: Install dependencies and build
       #   run: |
