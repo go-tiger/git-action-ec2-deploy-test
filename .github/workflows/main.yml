@@ -1,13 +1,11 @@
 name: Deploy to EC2
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     types: [closed]
     branches:
       - main
+      - dev
 
 jobs:
   deploy:
@@ -15,6 +13,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
 
       - name: Install Node.js and NPM
         uses: actions/setup-node@v2
@@ -22,9 +22,7 @@ jobs:
           node-version: '18.x'
 
       - name: Connect to EC2 instance
-        if:
-          github.event.pull_request.merged == true || github.event_name ==
-          'push'
+        if: github.event.pull_request.merged == true
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.HOST }}
@@ -32,8 +30,10 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
+            log(${{ github.event.pull_request.base.ref }})
             pm2 stop all
             cd git-action-ec2-deploy-test
-            git pull origin main
+            git checkout ${{ github.event.pull_request.base.ref }}
+            git pull origin ${{ github.event.pull_request.base.ref }}
             npm i
             pm2 restart all
