@@ -27,3 +27,7 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             pm2 stop 0
+            cd git-action-ec2-deploy-test
+            git pull origin main
+            npm i
+            pm2 restart 0
