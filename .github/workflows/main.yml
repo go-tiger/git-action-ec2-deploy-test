@@ -4,11 +4,14 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    types: [closed]
+    branches:
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -19,6 +22,9 @@ jobs:
           node-version: '18.x'
 
       - name: Connect to EC2 instance
+        if:
+          github.event.pull_request.merged == true || github.event_name ==
+          'push'
         uses: appleboy/ssh-action@v0.1.6
         with:
           host: ${{ secrets.HOST }}
