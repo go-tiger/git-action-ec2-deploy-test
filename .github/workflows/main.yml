@@ -30,6 +30,7 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
+            log(${{ github.event.pull_request.base.ref }})
             pm2 stop all
             cd git-action-ec2-deploy-test
             git checkout ${{ github.event.pull_request.base.ref }}
