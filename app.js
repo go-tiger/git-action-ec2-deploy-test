@@ -4,7 +4,7 @@ const app = express();
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.send('되라 되라 되라 되라~');
+  res.send('이제될껄?');
 });
 
 app.listen(3000, async () => {
