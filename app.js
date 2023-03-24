@@ -4,7 +4,7 @@ const app = express();
 app.use(express.json());
 
 app.get('/', (req, res) => {
-  res.send('진짜 마지막 2023.03.24 오후 3:22');
+  res.send('진짜 마지막 2023.03.25 오전 3:32');
 });
 
 app.listen(3000, async () => {
