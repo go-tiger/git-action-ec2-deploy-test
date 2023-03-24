@@ -18,11 +18,9 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            ls -al
+            sudo chown ubuntu:ubuntu /home/***/.pm2/rpc.sock /home/***/.pm2/pub.sock
             cd git-action-ec2-deploy-test
-            ls
             pm2 stop 0
             git pull origin main
-            ls
             npm i
             pm2 restart 0
